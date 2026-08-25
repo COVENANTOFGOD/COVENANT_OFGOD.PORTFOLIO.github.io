@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COVENANT_OFGOD  Data & Business Analyst</title>
+<meta name="description" content="COVENANT_OFGOD - Data & Business Analyst. Turning raw data into decisions with BI, SQL, Excel, Tableau and Python.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E1A;
+    --bg-surface:#121A2C;
+    --bg-surface-2:#182238;
+    --line:#242F47;
+    --ink:#E8ECF4;
+    --ink-muted:#8993AA;
+    --ink-faint:#5C6784;
+    --cool:#4C8DFF;
+    --cool-dim:#2A4A8A;
+    --warm:#F5A623;
+    --warm-dim:#8A6522;
+    --radius:14px;
+    --maxw:1120px;
+    --font-display:'Sora', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(76,141,255,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 10%, rgba(245,166,35,0.06), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+  section{position:relative; z-index:1;}
+
+  ::selection{background:var(--warm); color:#0A0E1A;}
+  :focus-visible{outline:2px solid var(--warm); outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,26,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .logo{
+    font-family:var(--font-mono); font-size:15px; letter-spacing:0.02em;
+    color:var(--ink); display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:7px; height:7px; border-radius:50%; background:var(--warm); box-shadow:0 0 8px var(--warm);}
+  .navlinks{display:flex; gap:32px; font-size:14px; color:var(--ink-muted);}
+  .navlinks a{transition:color .2s;}
+  .navlinks a:hover{color:var(--ink);}
+  .nav-cta{
+    font-family:var(--font-mono); font-size:13px; padding:9px 16px;
+    border:1px solid var(--line); border-radius:8px; color:var(--ink);
+    transition:border-color .2s, background .2s;
+  }
+  .nav-cta:hover{border-color:var(--warm); background:rgba(245,166,35,0.08);}
+  .navlinks, .nav-cta{display:none;}
+  @media(min-width:760px){ .navlinks{display:flex;} .nav-cta{display:inline-block;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding-top:100px; padding-bottom:60px;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1fr; gap:56px; align-items:center;
+  }
+  @media(min-width:900px){ .hero-grid{grid-template-columns:1.05fr 0.95fr;} }
+
+  .eyebrow{
+    font-family:var(--font-mono); font-size:13px; color:var(--warm);
+    letter-spacing:0.08em; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{content:""; width:24px; height:1px; background:var(--warm);}
+
+  h1.hero-title{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(2.2rem, 5.4vw, 3.6rem);
+    line-height:1.08; letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  h1.hero-title .accent{color:var(--warm);}
+  h1.hero-title .cool{color:var(--cool);}
+
+  .hero-sub{
+    font-size:17px; color:var(--ink-muted); max-width:52ch; margin-bottom:34px;
+  }
+
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px;}
+  .btn{
+    font-family:var(--font-mono); font-size:14px; padding:13px 22px; border-radius:9px;
+    display:inline-flex; align-items:center; gap:8px; transition:transform .18s, box-shadow .18s;
+  }
+  .btn-primary{background:var(--warm); color:#0A0E1A; font-weight:500;}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 22px rgba(245,166,35,0.25);}
+  .btn-ghost{border:1px solid var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ink-faint); transform:translateY(-2px);}
+
+  .hero-stats{display:flex; gap:36px; flex-wrap:wrap;}
+  .stat b{
+    display:block; font-family:var(--font-mono); font-size:22px; color:var(--ink);
+  }
+  .stat span{font-size:12.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em;}
+
+  /* --- hero visual: data -> insight --- */
+  .hero-visual{
+    position:relative; height:380px;
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:linear-gradient(180deg, var(--bg-surface), var(--bg-surface-2));
+    overflow:hidden;
+  }
+  .hero-visual .panel-label{
+    position:absolute; top:16px; left:18px; font-family:var(--font-mono);
+    font-size:11px; color:var(--ink-faint); letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .hero-visual .panel-label.right{left:auto; right:18px; color:var(--warm-dim);}
+  .digit-field{
+    position:absolute; inset:0;
+    font-family:var(--font-mono); font-size:13px; color:var(--cool-dim);
+  }
+  .digit-field span{
+    position:absolute; opacity:0; animation:digitFloat 6s ease-in-out infinite;
+  }
+  @keyframes digitFloat{
+    0%{opacity:0; transform:translateY(6px);}
+    12%{opacity:0.55;}
+    45%{opacity:0.55; transform:translateY(-2px);}
+    65%{opacity:0;}
+    100%{opacity:0;}
+  }
+  .chart-panel{
+    position:absolute; right:0; bottom:0; width:52%; height:100%;
+    display:flex; align-items:flex-end; justify-content:center; gap:9px;
+    padding:60px 22px 34px;
+    border-left:1px dashed var(--line);
+  }
+  .bar{
+    width:12%; border-radius:4px 4px 0 0;
+    background:linear-gradient(180deg, var(--warm), var(--warm-dim));
+    animation:growBar 2.6s cubic-bezier(.2,.9,.25,1) infinite alternate;
+    box-shadow:0 0 18px rgba(245,166,35,0.12);
+  }
+  .bar:nth-child(1){height:38%; animation-delay:0s;}
+  .bar:nth-child(2){height:62%; animation-delay:.15s;}
+  .bar:nth-child(3){height:47%; animation-delay:.3s;}
+  .bar:nth-child(4){height:80%; animation-delay:.45s;}
+  .bar:nth-child(5){height:58%; animation-delay:.6s;}
+  .bar:nth-child(6){height:70%; animation-delay:.75s;}
+  @keyframes growBar{
+    from{transform:scaleY(0.92); opacity:0.85;}
+    to{transform:scaleY(1); opacity:1;}
+  }
+  .flow-arrow{
+    position:absolute; left:46%; top:50%; transform:translate(-50%,-50%);
+    font-family:var(--font-mono); font-size:12px; color:var(--ink-faint);
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+  }
+  .flow-arrow .line{width:34px; height:1px; background:linear-gradient(90deg, var(--cool-dim), var(--warm));}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:96px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .kicker{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--cool);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px;
+  }
+  h2{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(1.6rem, 3.2vw, 2.1rem); letter-spacing:-0.01em;
+    margin-bottom:14px;
+  }
+  .section-head p{color:var(--ink-muted); font-size:15.5px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  .about-body{
+    display:grid; grid-template-columns:1fr; gap:40px;
+  }
+  @media(min-width:860px){ .about-body{grid-template-columns:0.9fr 1.1fr;} }
+  .about-copy p{color:var(--ink-muted); font-size:15.5px; margin-bottom:16px;}
+  .about-copy strong{color:var(--ink); font-weight:600;}
+  .pull-quote{
+    font-family:var(--font-display); font-weight:600; font-size:1.3rem;
+    line-height:1.4; color:var(--ink);
+    border-left:2px solid var(--warm); padding-left:20px;
+  }
+  .pull-quote .cool-word{color:var(--cool);}
+
+  /* ---------- APPROACH (cyclical, not numbered) ---------- */
+  .approach-ring{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:2px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  }
+  .approach-cell{
+    background:var(--bg-surface); padding:26px 24px; position:relative;
+  }
+  .approach-cell .q-mark{
+    font-family:var(--font-mono); font-size:13px; color:var(--warm-dim); display:block; margin-bottom:10px;
+  }
+  .approach-cell p{font-size:14.5px; color:var(--ink); line-height:1.5;}
+
+  /* ---------- SKILLS ---------- */
+  .skill-groups{display:flex; flex-direction:column; gap:28px;}
+  .skill-group-label{
+    font-family:var(--font-mono); font-size:12px; color:var(--ink-faint);
+    text-transform:uppercase; letter-spacing:0.06em; width:100%; margin-bottom:12px;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    font-family:var(--font-mono); font-size:13px; padding:8px 14px;
+    border:1px solid var(--line); border-radius:20px; color:var(--ink-muted);
+    transition:border-color .2s, color .2s, background .2s;
+  }
+  .chip:hover{border-color:var(--cool); color:var(--ink); background:rgba(76,141,255,0.06);}
+
+  /* ---------- PROJECTS ---------- */
+  .project-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px;
+  }
+  .project-card{
+    background:var(--bg-surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px; transition:transform .2s, border-color .2s;
+  }
+  .project-card:hover{transform:translateY(-4px); border-color:var(--cool-dim);}
+  .project-card .tag{
+    font-family:var(--font-mono); font-size:11px; color:var(--warm);
+    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; display:block;
+  }
+  .project-card h3{font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:8px;}
+  .project-card p{font-size:13.5px; color:var(--ink-muted);}
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{
+    text-align:center; padding:100px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .philosophy blockquote{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(1.4rem, 3.6vw, 2.1rem); line-height:1.4; max-width:820px; margin:0 auto;
+  }
+  .philosophy blockquote .warm{color:var(--warm);}
+  .philosophy cite{
+    display:block; margin-top:22px; font-style:normal; font-family:var(--font-mono);
+    font-size:13px; color:var(--ink-faint);
+  }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{padding:100px 0 40px;}
+  .contact-inner{
+    background:var(--bg-surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:52px 40px; text-align:center;
+  }
+  .contact-inner h2{margin-bottom:14px;}
+  .contact-inner p{color:var(--ink-muted); margin-bottom:30px; max-width:48ch; margin-left:auto; margin-right:auto;}
+  .contact-links{display:flex; justify-content:center; gap:14px; flex-wrap:wrap;}
+
+  footer{padding:32px 0 60px; text-align:center;}
+  footer p{font-family:var(--font-mono); font-size:12.5px; color:var(--ink-faint);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot"></span>COVENANT_OFGOD PORTFOLIO</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#approach">Approach</a>
+      <a href="#skills">Skills</a>
+      <a href="#work">Work</a>
+    </div>
+    <a class="nav-cta" href="#contact">Get in touch</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Data &amp; Business Analyst</div>
+        <h1 class="hero-title">Turning raw <span class="cool">data</span> into Actionable  <span class="accent">decisions.</span></h1>
+        <p class="hero-sub">I'm Irogementi Covenant. I work across the analytics workflow, from messy spreadsheets to dashboards stakeholders actually use to answer one question: what can we learn from the information we already have?</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#work">See what I'm building</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b>SQL · Excel · Python</b><span>Core tooling</span></div>
+          <div class="stat"><b>Power BI · Tableau</b><span>Visualization</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <span class="panel-label">raw data</span>
+        <span class="panel-label right">insight</span>
+        <div class="digit-field" id="digitField"></div>
+        <div class="flow-arrow"><span>→</span><span class="line"></span></div>
+        <div class="chart-panel">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">About</div>
+        <h2>Data becomes valuable once it's understood.</h2>
+      </div>
+      <div class="about-body reveal">
+        <div class="about-copy">
+          <p>I am a <strong>Data and Business Analyst</strong> 
+          with a growing background in data analytics, business intelligence, 
+          technology, and creative problem-solving. I do transform raw data 
+          into meaningful insight that helps businesses understand performance, 
+          spot opportunity, and make better decisions.</p>
+          <p>I'm building practical experience across the full workflow  <strong>
+          collection, cleaning, transformation, exploratory analysis, visualization, 
+          reporting, and insight generation</strong> 
+          using <strong>Excel, Power BI, Tableau, SQL, Python, Pandas, NumPy, Matplotlib.</strong> 
+          to explore data and communicate findings that can actually support a decision.</p>
+          <p>My interests extend beyond analytics into <strong>
+          computer science, networking, cybersecurity, and technology</strong> 
+          more broadly which shapes how I break problems into components and 
+          investigate solutions. Alongside this, a background in <strong>
+          graphic design and digital creativity</strong> (including tools like PixelLab) 
+          informs how I think about communicating what the data shows.</p>
+        </div>
+        <div class="pull-quote">
+          Data tells a story, but <span class="cool-word">analysis</span> 
+          gives that story <span class="cool-word">meaning</span> by explaining it.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="approach">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Approach</div>
+        <h2>It starts with the business problem, not the chart.</h2>
+        <p>Six questions I keep coming back to on every dataset not a sequence, a loop I run continuously.</p>
+      </div>
+      <div class="approach-ring reveal">
+        <div class="approach-cell"><span class="q-mark">Q.</span><p>
+            What problem are we actually trying to solve?</p></div>
+        <div class="approach-cell"><span class="q-mark">Q.</span><p>
+            What does the available data tell us?</p></div>
+        <div class="approach-cell"><span class="q-mark">Q.</span><p>
+            What patterns, trends, or anomalies exist?</p></div>
+        <div class="approach-cell"><span class="q-mark">Q.</span><p>
+            What factors may be influencing the outcome?</p></div>
+        <div class="approach-cell"><span class="q-mark">Q.</span><p>
+            What insights matter most to stakeholders?</p></div>
+        <div class="approach-cell"><span class="q-mark">Q.</span><p>
+            What action can be taken based on those insights?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Skills</div>
+        <h2>Tools I reach for.</h2>
+      </div>
+      <div class="skill-groups reveal">
+        <div>
+          <div class="skill-group-label">Business Intelligence &amp; Visualization</div>
+          <div class="chip-row">
+            <span class="chip">Microsoft Excel</span><span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">Dashboard Design</span><span class="chip">KPI Selection</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-label">SQL &amp; Databases</div>
+          <div class="chip-row">
+            <span class="chip">Querying</span><span class="chip">Joins &amp; Aggregation</span><span class="chip">Filtering &amp; Grouping</span><span class="chip">Data Validation</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-label">Python &amp; Analysis</div>
+          <div class="chip-row">
+            <span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Matplotlib</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-label">Foundation &amp; Tech</div>
+          <div class="chip-row">
+            <span class="chip">Networking</span><span class="chip">Graphic Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">What I'm building</div>
+      <h2>A portfolio focused on reasoning, not just tools.</h2>
+      <p>Each project is meant to show the thinking from defining 
+        the problem to communicating the recommendation 
+        not just that I know a tool.</p>
+    </div>
+    <div class="project-grid reveal">
+      <a class="project-card" href="https://github.com/COVENANTOFGOD/Data-Jobs-Dashboard" target="_blank" rel="noopener">
+        <img src="images/djd.png" alt="Data Jobs Dashboard screenshot" class="project-thumb"> 
+        <span class="tag">Power BI</span>
+        <h3>Data Jobs Salary & Market Intelligence Dashboard</h3>
+        <p>An interactive Power BI dashboard analysing 479,000+ data-related 
+        job postings, built to answer a practical question: what does the 
+        data job market actually pay, and what does it actually demand?</p>
+      </a>
+
+      <a class="project-card" href="https://github.com/COVENANTOFGOD/Data-Jobs-Dashboard" target="_blank" rel="noopener">
+        <img src="images/djd.png" alt="Data Jobs Dashboard screenshot" class="project-thumb"> 
+        <span class="tag">Power BI</span>
+        <h3>Data Jobs Salary & Market Intelligence Dashboard</h3>
+        <p>An interactive Power BI dashboard analysing 479,000+ data-related 
+        job postings, built to answer a practical question: what does the 
+        data job market actually pay, and what does it actually demand?</p>
+      </a>
+      
+      <div class="project-card">
+        <span class="tag">Sales</span>
+        <h3>Sales &amp; Customer Analytics</h3>
+        <p>Understanding customer behavior and revenue drivers from transactional data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section class="philosophy">
+    <div class="wrap">
+      <blockquote class="reveal">Data & Numbers alone are unprocessed messy value. 
+        The value comes from asking the <span class="warm">right questions
+        </span> and turning insight into <span class="warm">informed action.</span></blockquote>
+      <cite>COVENANT_OFGOD</cite>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-inner reveal">
+        <h2>Let's talk about your data.</h2>
+        <p>Open to remote analyst roles, freelance dashboard work, and anything where data needs to become a decision.</p>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:covenantofgod0@gmail.com">Email me</a>
+          <a class="btn btn-ghost" href="https://github.com/COVENANTOFGOD" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/irogementi-covenant-b89a2037b/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="https://x.com/COVENANT_OFGOD" target="_blank" rel="noopener">Twitter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>©COVENANT_OFGOD.</p>
+</footer>
+
+<script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+
+  // floating digit field in hero
+  const digits = "0 1 2 3 4 5 6 7 8 9 42 17 3.2 89% 0.7".split(" ");
+  const field = document.getElementById('digitField');
+  if(field){
+    for(let i=0;i<16;i++){
+      const s = document.createElement('span');
+      s.textContent = digits[Math.floor(Math.random()*digits.length)];
+      s.style.left = (Math.random()*40 + 4) + '%';
+      s.style.top = (Math.random()*70 + 10) + '%';
+      s.style.animationDelay = (Math.random()*6) + 's';
+      s.style.animationDuration = (5 + Math.random()*3) + 's';
+      field.appendChild(s);
+    }
+  }
+</script>
+
+</body>
+</html>
