@@ -329,6 +329,36 @@
       height: auto;
     }
   }
+  /* Light theme override */
+  [data-theme="light"]{
+    --bg:#F4F6FB;
+    --bg-surface:#FFFFFF;
+    --bg-surface-2:#EDF1F9;
+    --line:#DCE2EE;
+    --ink:#141A2A;
+    --ink-muted:#4B5468;
+    --ink-faint:#8993AA;
+    --cool:#2F6FE0;
+    --cool-dim:#B9CDF2;
+    --warm:#E08E12;
+    --warm-dim:#F3D9A8;
+  }
+
+  /* Smooth transition when switching */
+  body, header, .project-card, .approach-cell, .chip, .contact-inner{
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+  }
+
+  /* Theme toggle button */
+  .theme-toggle{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line); background:var(--bg-surface);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--ink);
+    transition: border-color .2s, background .2s;
+  }
+  .theme-toggle:hover{border-color:var(--warm);}
+  .theme-toggle svg{width:18px; height:18px;}
 
 </style>
 </head>
@@ -336,6 +366,9 @@
 
 <header>
   <nav class="wrap">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+  <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+</button>
     <div class="logo"><span class="dot"></span>COVENANT_OFGOD PORTFOLIO</div>
     <div class="navlinks">
       <a href="#about">About</a>
@@ -343,7 +376,7 @@
       <a href="#skills">Skills</a>
       <a href="#Projects">Projects</a>
     </div>
-    <a class="nav-cta" href="#contact">Get in contact</a>
+    <a class="nav-cta" href="#contact">Get in Touch</a>
   </nav>
 </header>
 
@@ -355,12 +388,13 @@
         <h1 class="hero-title"><span class="cool">Business Analyst</span></h1>
         <h1 class="hero-title">Turning raw <span class="cool">data</span> 
           into Actionable  <span class="accent">decisions.</span></h1>
-        <p class="hero-sub">I'm COVENANT_OFGOD. I work across the analytics workflow, 
-        from messy spreadsheets to dashboards stakeholders actually use 
-        to answer one question: what can we learn or do from the information we already have?</p>
+        <p class="hero-sub">I'm Irogementi Covenant. I work across the analytics workflow, 
+        from messy spreadsheets to dashboards that stakeholders can actually use 
+        to answer one question: what can we learn or do from the information 
+        we already have and what actions should we take?</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#Projects">Projects i've worked on</a>
-          <a class="btn btn-ghost" href="#contact">Get in contact</a>
+          <a class="btn btn-ghost" href="#contact">Get in Touch</a>
         </div>
         <div class="hero-stats">
           <div class="stat"><b>SQL · Excel · Python</b><span>Core Cleaning </span></div>
@@ -386,14 +420,16 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div class="kicker">My Strategy</div>
-        <h2>It starts with the business problem, not the chart.</h2>
-        <p>Six questions I keep coming back to on every dataset not a sequence, a loop I run continuously.</p>
+        <h2>It Starts with the Business Problem, Not the Chart.</h2>
+        <p>There are six questions I keep coming back to with 
+          every dataset. They are not a sequence, 
+          they form a continuous loop that guides my analysis.</p>
       </div>
       <div class="approach-ring reveal">
         <div class="approach-cell"><span class="q-mark">Questions.</span><p>
             1. What problem are we actually trying to solve?</p>
             <p>
-            2. What does the available data tell us?</p>
+            2. What Data do we have avaliable and what does the available data tell us?</p>
             <p>
             3. What patterns, trends, or anomalies exist?</p>
             <p>
@@ -522,7 +558,7 @@
         </div>
         <div class="pull-quote">
           Data tells a story, but <span class="cool-word">analysis</span> 
-          gives that story <span class="cool-word">meaning</span> by explaining it.
+          gives that story <span class="cool-word">meaning</span>
         </div>
       </div>
     </div>
@@ -554,6 +590,34 @@
 <footer>
   <p>©COVENANT_OFGOD.</p>
 </footer>
+
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  const sunIcon = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+
+  function applyTheme(theme){
+    if(theme === 'light'){
+      document.documentElement.setAttribute('data-theme', 'light');
+      themeIcon.innerHTML = sunIcon;
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      themeIcon.innerHTML = moonIcon;
+    }
+    localStorage.setItem('theme', theme);
+  }
+
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(savedTheme);
+
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
+</script>
+
 
 <script>
   // scroll reveal
