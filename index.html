@@ -291,47 +291,43 @@
   footer{padding:32px 0 60px; text-align:center;}
   footer p{font-family:var(--font-mono); font-size:12.5px; color:var(--ink-faint);}
 
-  .about-photo{
-  width:160px; height:160px; border-radius:50%;
-  object-fit:cover; object-position:center;
-  border:2px solid var(--warm);
-  box-shadow:0 0 24px rgba(245,166,35,0.15);
-  margin-bottom:28px;
-  .about-photo{box-shadow:none;}
-
-  /* Default (desktop/tablet) grid stays as-is */
-
-/* Mobile: turn this project grid into a horizontal swipe carousel */
-@media (max-width: 768px) {
-  #Projects .project-grid {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 8px 16px 16px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-
-    /* hide scrollbar (optional, keeps it clean) */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    .about-photo{
+    width:160px; height:160px;
+    object-fit:cover; object-position:center;
+    border:2px solid var(--warm);
+    box-shadow:0 0 24px rgba(245,166,35,0.15);
+    margin-bottom:28px;
   }
 
-  #Projects .project-grid::-webkit-scrollbar {
-    display: none;
-  }
+  /* Mobile: turn this project grid into a horizontal swipe carousel */
+  @media (max-width: 768px) {
+    #Projects .project-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 16px;
+      padding: 8px 16px 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
 
-  #Projects .project-card {
-    flex: 0 0 85%;       /* each card takes ~85% of screen width */
-    max-width: 320px;
-    scroll-snap-align: start;
-  }
+    #Projects .project-grid::-webkit-scrollbar {
+      display: none;
+    }
 
-  #Projects .project-card .project-thumb {
-    width: 100%;
-    height: auto;
+    #Projects .project-card {
+      flex: 0 0 85%;
+      max-width: 320px;
+      scroll-snap-align: start;
+    }
+
+    #Projects .project-card .project-thumb {
+      width: 100%;
+      height: auto;
+    }
   }
-}
 
 </style>
 </head>
@@ -532,8 +528,8 @@
   </section>
   <section class="philosophy">
     <div class="wrap">
-      <blockquote class="reveal">Data & Numbers alone are raw . 
-        The value comes from asking the <span class="warm">right questions
+      <blockquote class="reveal">Data & Numbers alone are raw values . 
+        The main value comes from asking the <span class="warm">right questions
         </span> and turning insight into <span class="warm">informed action.</span></blockquote>
     </div>
   </section>
