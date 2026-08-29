@@ -298,6 +298,41 @@
   box-shadow:0 0 24px rgba(245,166,35,0.15);
   margin-bottom:28px;
   .about-photo{box-shadow:none;}
+
+  /* Default (desktop/tablet) grid stays as-is */
+
+/* Mobile: turn this project grid into a horizontal swipe carousel */
+@media (max-width: 768px) {
+  #Projects .project-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 8px 16px 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    /* hide scrollbar (optional, keeps it clean) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #Projects .project-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  #Projects .project-card {
+    flex: 0 0 85%;       /* each card takes ~85% of screen width */
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  #Projects .project-card .project-thumb {
+    width: 100%;
+    height: auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -407,8 +442,10 @@
           </div>
         </div>
       </div>
-    </div>
+     </div>
   </section>
+
+  
 
  <section class="section" id="Projects">
   <div class="wrap">
@@ -458,7 +495,7 @@
   </div>
 </section>
 
-  
+
 
     <section class="section" id="about">
     <div class="wrap">
