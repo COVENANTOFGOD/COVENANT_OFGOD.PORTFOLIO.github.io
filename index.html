@@ -41,6 +41,19 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 8
 .tt{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surf);display:grid;place-items:center}
 .tt:hover{border-color:var(--acc)}.tt svg{width:18px;height:18px}
 
+/* mobile menu */
+.menu{display:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surf);place-items:center}
+.menu svg{width:18px;height:18px}
+.mnav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--line);padding:6px 24px 16px}
+.mnav.open{display:block}
+.mnav a{display:block;padding:13px 0;border-top:1px solid var(--line);font-size:16px;color:var(--mute)}
+.mnav a:first-child{border-top:0}.mnav a:hover{color:var(--ink)}
+.mnav .rs-m{color:var(--acc);font-weight:600}
+@media(max-width:759px){.menu{display:grid}}
+@media(min-width:760px){.mnav{display:none!important}}
+@media(max-width:520px){.rs{display:none}.brand{font-size:15px}}
+@media(min-width:521px){.rs-m{display:none}}
+
 /* buttons */
 .btn{display:inline-flex;align-items:center;padding:12px 22px;border-radius:10px;font-weight:600;font-size:15px;border:1px solid var(--line);transition:transform .15s,border-color .15s}
 .btn:hover{transform:translateY(-2px);border-color:var(--mute)}
@@ -71,6 +84,10 @@ h1{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;margin-bottom:22px;max-wid
 .hint{position:absolute;left:14px;bottom:12px;font-size:13px;color:#A3B1D4;background:rgba(10,17,40,.85);border:1px solid #1B2850;padding:5px 12px;border-radius:99px;pointer-events:none;transition:opacity .5s}
 .scene.moved .hint{opacity:0}
 .nogl{display:grid;place-items:center;color:#A3B1D4;text-align:center;padding:24px}
+@media(max-width:700px){
+  .scene{aspect-ratio:4/3;min-height:0;border-radius:16px}
+  .hint{font-size:12px;padding:4px 10px;left:10px;bottom:10px}
+}
 
 /* projects */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 22px}
@@ -155,7 +172,21 @@ footer{padding:36px 0 56px;color:var(--mute);font-size:14px}
   <nav class="links" aria-label="Main"><a href="#projects">Projects</a><a href="#process">My Idea</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#certificates">Certificates</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
   <a class="btn p rs" href="Irogementi_Covenant_Resume.pdf" download="Irogementi_Covenant_Resume.pdf">Get Resume</a>
   <button class="tt" id="tt" aria-label="Switch between dark and light theme"><svg id="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button>
-</div></header>
+  <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+</div>
+<nav class="mnav" id="mnav" aria-label="Mobile">
+  <a href="#projects">Projects</a>
+  <a href="#process">My Idea</a>
+  <a href="#skills">Skills</a>
+  <a href="#experience">Experience</a>
+  <a href="#certificates">Certificates</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a class="rs-m" href="Irogementi_Covenant_Resume.pdf" download>Get Resume</a>
+</nav>
+</header>
 
 <main id="top">
 <section class="hero"><div class="wrap">
@@ -540,6 +571,12 @@ function theme(t){t==='light'?root.setAttribute('data-theme','light'):root.remov
 let saved;try{saved=localStorage.getItem('theme')}catch(e){}
 theme(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
 $('tt').onclick=()=>theme(root.getAttribute('data-theme')==='light'?'dark':'light');
+theme(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
+$('tt').onclick=()=>theme(root.getAttribute('data-theme')==='light'?'dark':'light');
+
+const mb=document.getElementById('menu'),mn=document.getElementById('mnav');
+mb.onclick=()=>{const o=mn.classList.toggle('open');mb.setAttribute('aria-expanded',o)};
+mn.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mn.classList.remove('open');mb.setAttribute('aria-expanded','false')}));
 </script>
 <script>
 /* Edit this list: one line per certificate */
