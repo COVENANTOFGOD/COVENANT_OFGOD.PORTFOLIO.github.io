@@ -175,13 +175,20 @@ footer{padding:36px 0 56px;color:var(--mute);font-size:14px}
   .btn.rs{padding:8px 12px;font-size:13px}
 }
 
+/* keep Get Resume visible and noticeable on phones */
+.rs-m{display:none}
+.tt-m{display:none;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:13px 0;font-size:16px;color:var(--mute)}
 @media(max-width:520px){
-  .btn.rs{display:none}   /* Get Resume moves into the menu */
+  .btn.rs{display:inline-flex;padding:8px 14px;font-size:13px;box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
 }
-
+@media(max-width:420px){
+  .gt{display:none}          /* "Get Resume" becomes "Resume" */
+  .tt{display:none}          /* theme toggle moves into the menu */
+  .tt-m{display:block}
+}
 @media(max-width:340px){
-  .brand{font-size:14px}
   .brand i{display:none}
+  .btn.rs{padding:7px 10px}
 }
 </style>
 </head>
@@ -190,7 +197,7 @@ footer{padding:36px 0 56px;color:var(--mute);font-size:14px}
 <header><div class="wrap bar">
   <a class="brand" href="#top"><i></i>Irogementi Covenant</a>
   <nav class="links" aria-label="Main"><a href="#projects">Projects</a><a href="#process">My Idea</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#certificates">Certificates</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-  <a class="btn p rs" href="Irogementi_Covenant_Resume.pdf" download="Irogementi_Covenant_Resume.pdf">Get Resume</a>
+  <a class="btn p rs" href="Irogementi_Covenant_Resume.pdf" download="Irogementi_Covenant_Resume.pdf"><span class="gt">Get </span>Resume</a>
   <button class="tt" id="tt" aria-label="Switch between dark and light theme"><svg id="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button>
   <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -205,6 +212,7 @@ footer{padding:36px 0 56px;color:var(--mute);font-size:14px}
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
   <a class="rs-m" href="Irogementi_Covenant_Resume.pdf" download>Get Resume</a>
+  <button class="tt-m" id="ttm" type="button">Switch light / dark theme</button>
 </nav>
 </header>
 
@@ -593,6 +601,7 @@ theme(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'
 $('tt').onclick=()=>theme(root.getAttribute('data-theme')==='light'?'dark':'light');
 theme(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
 $('tt').onclick=()=>theme(root.getAttribute('data-theme')==='light'?'dark':'light');
+$('ttm').onclick=()=>theme(root.getAttribute('data-theme')==='light'?'dark':'light');
 
 const mb=document.getElementById('menu'),mn=document.getElementById('mnav');
 mb.onclick=()=>{const o=mn.classList.toggle('open');mb.setAttribute('aria-expanded',o)};
